@@ -17,6 +17,7 @@ class bigint{
 				num.pop_front();
 				--len;
 			}
+			if(len==1&&(!num.front())) is_neg=0;
 			return;
 		}
 	public:
