@@ -125,6 +125,7 @@ class bigint{
 		bigint operator-(){
 			bigint s=*this;
 			s.is_neg=(!s.is_neg);
+			s.delfirst0();
 			return s;
 		}
 		bigint operator+(bigint other){
