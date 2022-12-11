@@ -28,6 +28,219 @@ class bigint{
 			num.push_back(0);
 			return;
 		}
+		bigint(int q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			if(q<0){
+				is_neg=1;
+				q=-q;
+			}
+			else is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(unsigned int q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(long q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			if(q<0){
+				is_neg=1;
+				q=-q;
+			}
+			else is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(unsigned long q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(long long q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			if(q<0){
+				is_neg=1;
+				q=-q;
+			}
+			else is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(unsigned long long q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(__int128_t q){
+			if(q==0){
+				len=1;
+				is_neg=0;
+				num.clear();
+				num.push_back(0);
+			}
+			if(q<0){
+				is_neg=1;
+				q=-q;
+			}
+			else is_neg=0;
+			num.clear();
+			len=0;
+			while(q){
+				num.push_front(q%10);
+				q/=10;
+				++len;
+			}
+			return;
+		}
+		bigint(string q){
+			is_neg=0;
+			num.clear();
+			string s=q;
+			if(q[0]=='-'){
+				is_neg=1;
+				s=q.substr(1,q.length());
+			}
+			for(int i=0;i<s.length();++i){
+				if(s[i]>=48&&s[i]<=57){
+					num.push_back(s[i]-48);
+					++len;
+				}
+				else{
+					cout<<"[BigInt] Cannot convert \""<<q<<"\" into BigInt!!!\n";
+					cout<<"[BigInt] Error: char["<<i+is_neg<<"] => '"<<s[i]<<"'\n";
+					exit(3221225477u);
+				}
+			}
+			delfirst0();
+		}
+		operator int(){
+			int r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator unsigned int(){
+			unsigned int r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator long(){
+			long r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator unsigned long(){
+			unsigned long r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator long long(){
+			long long r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator unsigned long long(){
+			unsigned long long r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator __int128_t(){
+			__int128_t r=0;
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r=(r<<1)+(r<<3)+(*f);
+			if(is_neg) r=-r;
+			return r;
+		}
+		operator string(){
+			if(len==1&&num.front()==1) return "0";
+			string r="";
+			iter e=num.end();
+			for(iter f=num.begin();f!=e;++f) r+=char(48+(*f));
+			if(is_neg) r="-"+r;
+			return r;
+		}
 		bigint(bigint *&other){
 			len=other->len;
 			num=other->num;
@@ -128,6 +341,21 @@ class bigint{
 			s.delfirst0();
 			return s;
 		}
+		template<typename _T>
+		bigint& operator+=(_T other){
+			bigint _oth=bigint(other);
+			(*this)=(*this)+_oth;
+			return *this;
+		}
+		bigint& operator++(){
+			(*this)=(*this)+bigint(1);
+			return *this;
+		}
+		bigint operator++(int other){
+			bigint _oth=*this;
+			++(*this);
+			return _oth;
+		}
 		bigint operator+(bigint other){
 			bigint a=*this,b=other;
 			if(is_neg^other.is_neg){
@@ -187,6 +415,21 @@ class bigint{
 			}
 			a.delfirst0();
 			return a;
+		}
+		template<typename _T>
+		bigint& operator-=(_T other){
+			bigint _oth=bigint(other);
+			(*this)=(*this)-_oth;
+			return *this;
+		}
+		bigint& operator--(){
+			(*this)=(*this)-bigint(1);
+			return *this;
+		}
+		bigint operator--(int other){
+			bigint _oth=*this;
+			--(*this);
+			return _oth;
 		}
 		bigint operator-(bigint other){
 			bigint a=*this,b=other;
