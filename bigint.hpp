@@ -356,6 +356,12 @@ class bigint{
 			++(*this);
 			return _oth;
 		}
+		template<typename _T>
+		bigint operator+(_T other){
+			bigint _oth=bigint(other);
+			_oth+=(*this);
+			return _oth;
+		}
 		bigint operator+(bigint other){
 			bigint a=*this,b=other;
 			if(is_neg^other.is_neg){
@@ -429,6 +435,13 @@ class bigint{
 		bigint operator--(int other){
 			bigint _oth=*this;
 			--(*this);
+			return _oth;
+		}
+		template<typename _T>
+		bigint operator-(_T other){
+			bigint _oth=bigint(other);
+			_oth-=(*this);
+			_oth.is_neg=!(_oth.is_neg);
 			return _oth;
 		}
 		bigint operator-(bigint other){
